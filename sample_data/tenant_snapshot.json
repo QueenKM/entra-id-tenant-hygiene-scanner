@@ -1,0 +1,62 @@
+{
+  "tenant_name": "Astera University",
+  "security_defaults_enabled": false,
+  "conditional_access_policies": [
+    {
+      "name": "Require compliant device for finance admins",
+      "state": "enabled"
+    },
+    {
+      "name": "Report-only MFA pilot",
+      "state": "reportOnly"
+    }
+  ],
+  "users": [
+    {
+      "id": "u-001",
+      "display_name": "Nadia Petrova",
+      "user_type": "Member",
+      "last_sign_in_days_ago": 12,
+      "mfa_registered": false,
+      "roles": ["Global Administrator"]
+    },
+    {
+      "id": "u-002",
+      "display_name": "Chris Dawson",
+      "user_type": "Member",
+      "last_sign_in_days_ago": 78,
+      "mfa_registered": true,
+      "roles": ["Security Administrator"]
+    },
+    {
+      "id": "u-003",
+      "display_name": "Partner Ops Guest",
+      "user_type": "Guest",
+      "last_sign_in_days_ago": 5,
+      "mfa_registered": true,
+      "roles": ["Exchange Administrator"]
+    },
+    {
+      "id": "u-004",
+      "display_name": "Helpdesk Team",
+      "user_type": "Member",
+      "last_sign_in_days_ago": 2,
+      "mfa_registered": true,
+      "roles": []
+    }
+  ],
+  "service_principals": [
+    {
+      "id": "sp-001",
+      "display_name": "HR Data Sync",
+      "credential_days_to_expiry": 9,
+      "high_privilege_permissions": true
+    },
+    {
+      "id": "sp-002",
+      "display_name": "Campus Events App",
+      "credential_days_to_expiry": 210,
+      "high_privilege_permissions": false
+    }
+  ]
+}

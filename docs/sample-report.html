@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Entra ID Hygiene Report</title>
+    <style>
+      :root {
+        --bg: #f4f8fb;
+        --panel: rgba(255, 255, 255, 0.92);
+        --text: #173249;
+        --muted: #5a7588;
+        --teal: #0b7d74;
+        --blue: #156cbe;
+        --amber: #d97a10;
+        --border: rgba(23, 50, 73, 0.12);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "SF Pro Display", "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(11, 125, 116, 0.16), transparent 30%),
+          radial-gradient(circle at top right, rgba(21, 108, 190, 0.16), transparent 28%),
+          linear-gradient(180deg, #f8fcff 0%, #eef5f9 100%);
+        color: var(--text);
+      }
+      main {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 48px 24px 64px;
+      }
+      .hero {
+        display: grid;
+        gap: 18px;
+        margin-bottom: 28px;
+      }
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        line-height: 1.02;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 760px;
+      }
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 20px 44px rgba(23, 50, 73, 0.08);
+        backdrop-filter: blur(14px);
+      }
+      .score {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .score-badge {
+        min-width: 128px;
+        min-height: 128px;
+        border-radius: 28px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #0b7d74, #156cbe);
+        color: white;
+      }
+      .score-badge strong {
+        font-size: 2.6rem;
+      }
+      .score-text span,
+      .metric-label,
+      .finding-kicker {
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .metric-card {
+        border-radius: 18px;
+        padding: 16px;
+        background: #f6fafc;
+        border: 1px solid var(--border);
+      }
+      .metric-card strong {
+        font-size: 1.6rem;
+      }
+      .findings {
+        display: grid;
+        gap: 16px;
+      }
+      .finding-card {
+        border-radius: 22px;
+        padding: 22px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid var(--border);
+      }
+      .finding-card.high {
+        border-left: 8px solid #d97a10;
+      }
+      .finding-card.medium {
+        border-left: 8px solid #156cbe;
+      }
+      .finding-card.low {
+        border-left: 8px solid #0b7d74;
+      }
+      .finding-card h3 {
+        margin: 8px 0 12px;
+      }
+      @media (max-width: 860px) {
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+        .metrics {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <p>Entra ID Tenant Hygiene Scanner</p>
+        <h1>Astera University identity posture review</h1>
+        <p>
+          A recruiter-friendly security report that converts exported tenant state into
+          prioritized findings, posture scoring, and remediation guidance.
+        </p>
+      </section>
+
+      <section class="summary-grid">
+        <article class="panel score">
+          <div class="score-badge">
+            <div>
+              <strong>37</strong>
+              <span>/100</span>
+            </div>
+          </div>
+          <div class="score-text">
+            <span>Posture</span>
+            <h2>Urgent</h2>
+            <p>Total findings: 6</p>
+          </div>
+        </article>
+
+        <article class="panel metrics">
+          
+        <article class="metric-card">
+          <span class="metric-label">High</span>
+          <strong>3</strong>
+        </article>
+        
+        <article class="metric-card">
+          <span class="metric-label">Medium</span>
+          <strong>3</strong>
+        </article>
+        
+        </article>
+      </section>
+
+      <section class="findings">
+        
+        <article class="finding-card high">
+          <p class="finding-kicker">Identity Protection</p>
+          <h3>Privileged account without MFA: Nadia Petrova</h3>
+          <p><strong>Evidence:</strong> Roles: Global Administrator</p>
+          <p><strong>Recommendation:</strong> Require MFA registration and validate break-glass exceptions explicitly.</p>
+        </article>
+        
+        <article class="finding-card medium">
+          <p class="finding-kicker">Account Hygiene</p>
+          <h3>Stale privileged account: Chris Dawson</h3>
+          <p><strong>Evidence:</strong> Last sign-in was 78 days ago.</p>
+          <p><strong>Recommendation:</strong> Review whether the role is still needed and disable or reduce standing privilege.</p>
+        </article>
+        
+        <article class="finding-card high">
+          <p class="finding-kicker">External Access</p>
+          <h3>Guest account holds privileged role: Partner Ops Guest</h3>
+          <p><strong>Evidence:</strong> Guest user assigned: Exchange Administrator</p>
+          <p><strong>Recommendation:</strong> Replace guest standing privilege with just-in-time or internal admin accounts.</p>
+        </article>
+        
+        <article class="finding-card medium">
+          <p class="finding-kicker">Application Security</p>
+          <h3>High-privilege app credential expiring soon: HR Data Sync</h3>
+          <p><strong>Evidence:</strong> Credential expiry in 9 days.</p>
+          <p><strong>Recommendation:</strong> Rotate credentials now and prefer managed identity or certificate-backed auth.</p>
+        </article>
+        
+        <article class="finding-card high">
+          <p class="finding-kicker">Policy Coverage</p>
+          <h3>No strong MFA enforcement policy detected</h3>
+          <p><strong>Evidence:</strong> Security defaults are disabled and no enabled Conditional Access policy includes MFA enforcement.</p>
+          <p><strong>Recommendation:</strong> Enable security defaults or publish explicit Conditional Access MFA coverage for admins and core users.</p>
+        </article>
+        
+        <article class="finding-card medium">
+          <p class="finding-kicker">Authentication</p>
+          <h3>Legacy authentication is not clearly blocked</h3>
+          <p><strong>Evidence:</strong> No enabled Conditional Access policy name indicates a legacy authentication block control.</p>
+          <p><strong>Recommendation:</strong> Add a verified control that blocks legacy authentication and validate exceptions.</p>
+        </article>
+        
+      </section>
+    </main>
+  </body>
+</html>
