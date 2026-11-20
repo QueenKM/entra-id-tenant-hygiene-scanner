@@ -16,12 +16,44 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+SNAPSHOT_FIELDS = {
+    "users": {"id": str, "display_name": str, "roles": list, "user_type": str,
+              "last_sign_in_days_ago": int, "mfa_registered": bool},
+    "service_principals": {"id": str, "display_name": str,
+                           "credential_days_to_expiry": int, "high_privilege_permissions": bool},
+    "conditional_access_policies": {"name": str, "state": str},
+}
+
+
+def validate_snapshot(snapshot: object) -> None:
+    if not isinstance(snapshot, dict):
+        raise ValueError("expected a JSON object")
+    if type(snapshot.get("security_defaults_enabled")) is not bool:
+        raise ValueError("security_defaults_enabled must be a boolean")
+    for section, fields in SNAPSHOT_FIELDS.items():
+        rows = snapshot.get(section)
+        if not isinstance(rows, list):
+            raise ValueError(f"{section} must be an array")
+        for index, row in enumerate(rows):
+            if not isinstance(row, dict):
+                raise ValueError(f"{section}[{index}] must be an object")
+            for field, field_type in fields.items():
+                if type(row.get(field)) is not field_type:
+                    raise ValueError(f"{section}[{index}].{field} must be {field_type.__name__}")
+            if section == "users" and any(not isinstance(role, str) for role in row["roles"]):
+                raise ValueError(f"{section}[{index}].roles must contain strings")
+
+
 def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
 
     snapshot_path = Path(args.snapshot_path)
-    snapshot = json.loads(snapshot_path.read_text())
+    try:
+        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+        validate_snapshot(snapshot)
+    except (OSError, ValueError) as exc:
+        parser.error(f"Insufficient snapshot data: {exc}")
     findings = evaluate_snapshot(snapshot)
 
     if args.format == "json":
