@@ -48,6 +48,18 @@ HTML report:
 python3 -m scanner.cli sample_data/tenant_snapshot.json --format html --output docs/sample-report.html
 ```
 
+## Snapshot requirements
+
+Provide `security_defaults_enabled` as a boolean and three arrays, even when a section is empty.
+
+| Section | Required fields in each row |
+| --- | --- |
+| `users` | `id`, `display_name`, `roles` (array of strings), `user_type`, `last_sign_in_days_ago` (integer), `mfa_registered` (boolean) |
+| `service_principals` | `id`, `display_name`, `credential_days_to_expiry` (integer), `high_privilege_permissions` (boolean) |
+| `conditional_access_policies` | `name` and `state` |
+
+The CLI exits with an insufficient-data error if required fields are missing or have the wrong type. An empty array means the export confirmed that the section has no rows.
+
 ## Included Rules
 
 - privileged users without MFA
