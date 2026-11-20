@@ -59,7 +59,7 @@ python3 -m scanner.cli sample_data/tenant_snapshot.json --format html --output d
 
 ## Next Milestones
 
-1. Add CSV and HTML export modes
+1. Add CSV export
 2. Support live Microsoft Graph ingestion
 3. Add policy scoring by control area
 4. Add remediation playbooks linked to each finding
